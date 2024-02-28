@@ -19,4 +19,13 @@ namespace wci
 	{
 		mVelocity = newVelocity;
 	}
+
+	void Spaceship::Shoot()
+	{
+	}
+	void Spaceship::BeginPlay()
+	{
+		Actor::BeginPlay();
+		SetEnablePhysics(true);
+	}
 }

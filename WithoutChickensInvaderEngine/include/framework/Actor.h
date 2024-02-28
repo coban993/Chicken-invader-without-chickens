@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "Core.h"
 
+class b2Body;
 namespace wci
 {
 	class World;
@@ -31,8 +32,22 @@ namespace wci
 
 		sf::Vector2f GetActorForwardDirection() const;
 		sf::Vector2f GetActorRightDirection() const;
+		sf::Vector2u GetWindowSize() const;
+		sf::FloatRect GetActorGlobalBounds() const;
+
+		World* GetWorld() const { return mOwningWorld; }
+
+		bool IsActorOutOfBounds() const;
+
+		void SetEnablePhysics(bool enable);
+		virtual void OnActorBeingOverlap(Actor* other);
+		virtual void OnActorEndOverlap(Actor* other);
+		virtual void Destroy() override;
 
 	private:
+		void UpdatePhysicsTransform();
+		void InitializePhysics();
+		void UnInitializePhysics();
 		void CenterPivot();
 
 		World* mOwningWorld;
@@ -40,5 +55,8 @@ namespace wci
 
 		sf::Sprite mSprite;
 		shared<sf::Texture> mTexture;
+		b2Body* mPhysicBody;
+
+		bool mPhysicsEnabled;
 	};
 }

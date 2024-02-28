@@ -8,7 +8,7 @@ namespace wci
 		Object();
 		virtual	~Object();
 
-		void Destroy();
+		virtual void Destroy();
 		bool IsPendingDestroyed() const { return mIsPendingDestroyed; }
 
 	private:

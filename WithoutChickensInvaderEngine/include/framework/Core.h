@@ -4,6 +4,7 @@
 #include <memory>
 #include <map>
 #include <unordered_map>
+#include <unordered_set>
 
 namespace wci
 {
@@ -25,6 +26,9 @@ namespace wci
 
 	template<typename keyType, typename valType, typename Hasher = std::hash<keyType>>
 	using Dictionary = std::unordered_map<keyType, valType, Hasher>;
+
+	template<typename T>
+	using Set = std::unordered_set<T>;
 
 	//## garantuje da ako se nista ne otpakuje iz ostalih argumenata da neci puci funkcija
 	#define LOG(M, ...) printf(M "\n", ##__VA_ARGS__)

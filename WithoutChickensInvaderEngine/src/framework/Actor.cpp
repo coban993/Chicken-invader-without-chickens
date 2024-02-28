@@ -2,6 +2,9 @@
 #include "framework\Core.h"
 #include "framework\AssetManager.h"
 #include "framework\MathUtility.h"
+#include "framework\World.h"
+#include "framework\Physics.h"
+#include <box2d\b2_body.h>
 
 namespace wci
 {
@@ -9,7 +12,9 @@ namespace wci
 		:mOwningWorld{owningWorld},
 		mHasBeginPlay{false},
 		mSprite{},
-		mTexture{}
+		mTexture{},
+		mPhysicBody{nullptr},
+		mPhysicsEnabled{false}
 	{
 		SetTexture(texturePath);
 	}
@@ -68,11 +73,13 @@ namespace wci
 	void Actor::SetActorLocation(const sf::Vector2f& newLocation)
 	{
 		mSprite.setPosition(newLocation);
+		UpdatePhysicsTransform();
 	}
 
 	void Actor::SetActorRotation(float newRotation)
 	{
 		mSprite.setRotation(newRotation);
+		UpdatePhysicsTransform();
 	}
 
 	void Actor::AddActorLocationOffset(const sf::Vector2f& offset)
@@ -97,12 +104,98 @@ namespace wci
 
 	sf::Vector2f Actor::GetActorForwardDirection() const
 	{
-		return RotationToVector(GetActorRotation());
+		return RotationToVector(GetActorRotation() - 90.f);
 	}
 
 	sf::Vector2f Actor::GetActorRightDirection() const
 	{
-		return RotationToVector(GetActorRotation() + 90.f);
+		return RotationToVector(GetActorRotation());
+	}
+
+	sf::Vector2u Actor::GetWindowSize() const
+	{
+		return mOwningWorld->GetWindowSize();
+	}
+
+	sf::FloatRect Actor::GetActorGlobalBounds() const
+	{
+		return mSprite.getGlobalBounds();
+	}
+
+	bool Actor::IsActorOutOfBounds() const
+	{
+		float windowWidth = GetWorld()->GetWindowSize().x;
+		float windowHeight = GetWorld()->GetWindowSize().y;
+
+		float width = GetActorGlobalBounds().width;
+		float heaight = GetActorGlobalBounds().height;
+
+		sf::Vector2f actorPosition = GetActorLocation();
+
+		if (actorPosition.x < -width)
+			return true;
+
+		if (actorPosition.x > windowWidth + width)
+			return true;
+
+		if (actorPosition.y < -heaight)
+			return true;
+
+		if (actorPosition.y > windowHeight + heaight)
+			return true;
+
+		return false;
+	}
+
+	void Actor::SetEnablePhysics(bool enable)
+	{
+		mPhysicsEnabled = enable;
+		if (mPhysicsEnabled)
+			InitializePhysics();
+		else
+			UnInitializePhysics();
+	}
+
+	void Actor::OnActorBeingOverlap(Actor* other)
+	{
+		LOG("overlaped");
+	}
+
+	void Actor::OnActorEndOverlap(Actor* other)
+	{
+		LOG("overlaped finished");
+	}
+
+	void Actor::Destroy()
+	{
+		UnInitializePhysics();
+		Object::Destroy();
+	}
+
+	void Actor::UpdatePhysicsTransform()
+	{
+		if (mPhysicBody)
+		{
+			float physicsScale = Physics::Get().GetPhysicsScale();
+			b2Vec2 position{ GetActorLocation().x * physicsScale,
+				GetActorLocation().y * physicsScale };
+			float rotation = DegreesToRadians(GetActorRotation());
+
+			mPhysicBody->SetTransform(position, rotation);
+		}
+	}
+
+	void Actor::InitializePhysics()
+	{
+		if (!mPhysicBody)
+			mPhysicBody = Physics::Get().AddListener(this);
+	}
+
+	void Actor::UnInitializePhysics()
+	{
+		if (mPhysicBody)
+			Physics::Get().RemoveListener(mPhysicBody);
+		mPhysicBody = nullptr;
 	}
 
 	void Actor::CenterPivot()

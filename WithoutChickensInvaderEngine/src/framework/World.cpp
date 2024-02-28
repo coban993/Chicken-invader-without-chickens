@@ -1,6 +1,7 @@
 #include "framework\World.h"
 #include "framework\Core.h"
 #include "framework\Actor.h"
+#include "framework\Application.h"
 
 namespace wci
 {
@@ -26,14 +27,9 @@ namespace wci
 
 		mPendingActors.clear();
 		for (auto iter = mActors.begin(); iter != mActors.end();)
-		{
-			if (iter->get()->IsPendingDestroyed())
-				iter = mActors.erase(iter);
-			else
-			{
-				iter->get()->TickInternal(deltaTime);
-				++iter;
-			}
+		{	
+			iter->get()->TickInternal(deltaTime);
+			++iter;
 		}
 
 		Tick(deltaTime);
@@ -60,7 +56,23 @@ namespace wci
 		}
 	}
 
+	sf::Vector2u World::GetWindowSize() const
+	{
+		return mOwningApp->GetWindowSize();
+	}
+
 	void World::BeginPLay()
 	{
+	}
+
+	void World::CleanCycle()
+	{
+		for (auto iter = mActors.begin(); iter != mActors.end();)
+		{
+			if (iter->get()->IsPendingDestroyed())
+				iter = mActors.erase(iter);
+			else
+				++iter;
+		}
 	}
 }

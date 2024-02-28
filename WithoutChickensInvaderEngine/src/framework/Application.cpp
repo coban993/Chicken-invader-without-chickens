@@ -2,6 +2,7 @@
 #include "framework\Core.h"
 #include "framework\World.h"
 #include "framework\AssetManager.h"
+#include "framework\Physics.h"
 
 namespace wci
 {
@@ -58,6 +59,11 @@ namespace wci
 		}
 	}
 
+	sf::Vector2u Application::GetWindowSize() const
+	{
+		return mWindow.getSize();
+	}
+
 	void Application::TickInternal(float deltaTime)
 	{
 		Tick(deltaTime);
@@ -65,10 +71,14 @@ namespace wci
 		if (currentWorld)
 			currentWorld->TickInternal(deltaTime);
 
+		Physics::Get().Step(deltaTime);
+
 		if (mCleanCycleClock.getElapsedTime().asSeconds() >= mCleanCycleInterval)
 		{
 			mCleanCycleClock.restart();
 			AssetManager::Get().CleanCycle();
+			if (currentWorld)
+				currentWorld->CleanCycle();
 		}
 	}
 

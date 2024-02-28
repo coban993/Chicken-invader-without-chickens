@@ -16,8 +16,12 @@ namespace wci
 		void BeginPlayingInternal();
 		void Render(sf::RenderWindow& window);
 
-		template<typename ActorType>
-		weak<ActorType> SpawnActor();
+		template<typename ActorType, typename... Args>
+		weak<ActorType> SpawnActor(Args... args);
+
+		sf::Vector2u GetWindowSize() const;
+
+		void CleanCycle();
 
 	private:
 		Application* mOwningApp;
@@ -30,10 +34,10 @@ namespace wci
 		List<shared<Actor>> mPendingActors;
 	};
 
-	template<typename ActorType>
-	inline weak<ActorType> World::SpawnActor()
+	template<typename ActorType, typename... Args>
+	weak<ActorType> World::SpawnActor(Args... args)
 	{
-		shared<ActorType> newActor{ new ActorType{this} };
+		shared<ActorType> newActor{ new ActorType{this, args...} };
 		mPendingActors.push_back(newActor);
 		return newActor;
 	}
