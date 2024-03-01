@@ -28,17 +28,18 @@ namespace wci
 		weak<Spaceship> testSpaceship = newWorld.lock()->SpawnActor<Spaceship>();
 		testSpaceship.lock()->SetTexture("SpaceShooterRedux/PNG/playerShip1_green.png");
 		testSpaceship.lock()->SetActorLocation(sf::Vector2f(100.f, 50.f));
+		testSpaceship.lock()->SetTeamID(2);
 
 		counter = 0;
 	}
 
 	void GameApplication::Tick(float deltaTime)
 	{
-		counter += deltaTime;
+		/*counter += deltaTime;
 		if (counter > 10.f)
 		{
 			if (!testPlayerSpaceship.expired())
 				testPlayerSpaceship.lock()->Destroy();
-		}
+		}*/
 	}
 }

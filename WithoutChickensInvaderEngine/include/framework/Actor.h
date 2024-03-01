@@ -44,6 +44,15 @@ namespace wci
 		virtual void OnActorEndOverlap(Actor* other);
 		virtual void Destroy() override;
 
+		uint8 GetTeamID() const { return mTeamID; }
+		static uint8 GetNeturalTeamID() { return neturalTeamID; }
+
+		void SetTeamID(uint8 teamID) { mTeamID = teamID; }
+
+		bool IsOtherHostile(Actor* other) const;
+
+		virtual void ApplyDamage(float amount);
+
 	private:
 		void UpdatePhysicsTransform();
 		void InitializePhysics();
@@ -58,5 +67,8 @@ namespace wci
 		b2Body* mPhysicBody;
 
 		bool mPhysicsEnabled;
+		uint8 mTeamID;
+
+		const static uint8 neturalTeamID = 255;
 	};
 }

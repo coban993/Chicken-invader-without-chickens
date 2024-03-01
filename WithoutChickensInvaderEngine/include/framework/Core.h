@@ -30,6 +30,8 @@ namespace wci
 	template<typename T>
 	using Set = std::unordered_set<T>;
 
+	using uint8 = unsigned char;
+
 	//## garantuje da ako se nista ne otpakuje iz ostalih argumenata da neci puci funkcija
 	#define LOG(M, ...) printf(M "\n", ##__VA_ARGS__)
 }

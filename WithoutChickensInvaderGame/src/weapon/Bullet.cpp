@@ -8,6 +8,7 @@ namespace wci
 		mSpeed{speed},
 		mDamage{damage}
 	{
+		SetTeamID(owner->GetTeamID());
 	}
 
 	void Bullet::SetSpeed(float newSpeed)
@@ -37,5 +38,14 @@ namespace wci
 	void Bullet::Move(float deltaTime)
 	{
 		AddActorLocationOffset(GetActorForwardDirection() * mSpeed * deltaTime);
+	}
+
+	void Bullet::OnActorBeingOverlap(Actor* other)
+	{
+		if (IsOtherHostile(other))
+		{
+			other->ApplyDamage(GetDamage());
+			Destroy();
+		}
 	}
 }

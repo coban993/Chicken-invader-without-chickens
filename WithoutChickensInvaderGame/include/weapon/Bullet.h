@@ -8,6 +8,8 @@ namespace wci
 	public:
 		Bullet(World* world, Actor* owner, const std::string& texturePath, float speed = 600.f, float damage = 10.f);
 
+		float GetDamage() const { return mDamage; }
+
 		void SetSpeed(float newSpeed);
 		void SetDamage(float newDamage);
 
@@ -16,6 +18,7 @@ namespace wci
 
 	private:
 		void Move(float deltaTime);
+		virtual void OnActorBeingOverlap(Actor* other) override;
 
 		Actor* mOwner;
 		float mSpeed;

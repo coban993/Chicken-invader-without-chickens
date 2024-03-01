@@ -4,8 +4,9 @@
 namespace wci
 {
 	Spaceship::Spaceship(World* owningWorld, const std::string& texturePath)
-		:Actor{owningWorld, texturePath},
-		mVelocity{}
+		:Actor{ owningWorld, texturePath },
+		mVelocity{},
+		mHealth{100, 100}
 	{
 	}
 
@@ -27,5 +28,29 @@ namespace wci
 	{
 		Actor::BeginPlay();
 		SetEnablePhysics(true);
+
+		mHealth.onHealthChange.BindAction(GetWeakRef(), &Spaceship::OnHealthChanged);
+		mHealth.onTakenDamage.BindAction(GetWeakRef(), &Spaceship::OnTakenDamage);
+		mHealth.onHealthEmpty.BindAction(GetWeakRef(), &Spaceship::Blow);
+	}
+
+	void Spaceship::ApplyDamage(float amount)
+	{
+		mHealth.ChangeHealth(-amount);
+	}
+
+	void Spaceship::OnHealthChanged(float amount, float health, float maxHealth)
+	{
+		
+	}
+
+	void Spaceship::OnTakenDamage(float amount, float health, float maxHealth)
+	{
+
+	}
+
+	void Spaceship::Blow()
+	{
+		Destroy();
 	}
 }

@@ -14,7 +14,8 @@ namespace wci
 		mSprite{},
 		mTexture{},
 		mPhysicBody{nullptr},
-		mPhysicsEnabled{false}
+		mPhysicsEnabled{false},
+		mTeamID{GetNeturalTeamID()}
 	{
 		SetTexture(texturePath);
 	}
@@ -158,18 +159,30 @@ namespace wci
 
 	void Actor::OnActorBeingOverlap(Actor* other)
 	{
-		LOG("overlaped");
+		
 	}
 
 	void Actor::OnActorEndOverlap(Actor* other)
 	{
-		LOG("overlaped finished");
+		
 	}
 
 	void Actor::Destroy()
 	{
 		UnInitializePhysics();
 		Object::Destroy();
+	}
+
+	bool Actor::IsOtherHostile(Actor* other) const
+	{
+		if (GetTeamID() == GetNeturalTeamID() || other->GetTeamID() == GetNeturalTeamID()) return false;
+			
+		return GetTeamID() != other->GetTeamID();
+	}
+
+	void Actor::ApplyDamage(float amount)
+	{
+
 	}
 
 	void Actor::UpdatePhysicsTransform()
