@@ -1,12 +1,17 @@
 #pragma once
 #include "spaceship\Spaceship.h"
+#include "framework\MathUtility.h"
+#include "VFX\Explosion.h"
 
 namespace wci
 {
 	Spaceship::Spaceship(World* owningWorld, const std::string& texturePath)
 		:Actor{ owningWorld, texturePath },
 		mVelocity{},
-		mHealth{100, 100}
+		mHealth{100, 100},
+		mBlinkTime{0},
+		mBlinkDuration{0.2f},
+		mBlinkColorOffset{255, 0, 0, 255}
 	{
 	}
 
@@ -14,6 +19,7 @@ namespace wci
 	{
 		Actor::Tick(delataTime);
 		AddActorLocationOffset(GetVelocity() * delataTime);
+		UpdateBlink(delataTime);
 	}
 
 	void Spaceship::SetVelocity(const sf::Vector2f& newVelocity)
@@ -46,11 +52,32 @@ namespace wci
 
 	void Spaceship::OnTakenDamage(float amount, float health, float maxHealth)
 	{
-
+		Blink();
 	}
 
 	void Spaceship::Blow()
 	{
+		Explosion* exp = new Explosion();
+		exp->SpawnExplosion(GetWorld(), GetActorLocation());
+
 		Destroy();
+		delete exp;
+	}
+
+	void Spaceship::Blink()
+	{
+		if (mBlinkTime == 0.f)
+			mBlinkTime = mBlinkDuration;
+	}
+
+	void Spaceship::UpdateBlink(float deltaTime)
+	{
+		if (mBlinkTime > 0)
+		{
+			mBlinkTime -= deltaTime;
+			mBlinkTime = mBlinkTime > 0 ? mBlinkTime : 0.f;
+
+			GetSprite().setColor(LerpColor(sf::Color::White, mBlinkColorOffset, mBlinkTime));
+		}
 	}
 }

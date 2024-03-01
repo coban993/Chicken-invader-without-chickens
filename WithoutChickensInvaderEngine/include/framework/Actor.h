@@ -35,7 +35,8 @@ namespace wci
 		sf::Vector2u GetWindowSize() const;
 		sf::FloatRect GetActorGlobalBounds() const;
 
-		World* GetWorld() const { return mOwningWorld; }
+		const World* GetWorld() const { return mOwningWorld; }
+		World* GetWorld() { return mOwningWorld; }
 
 		bool IsActorOutOfBounds() const;
 
@@ -52,6 +53,9 @@ namespace wci
 		bool IsOtherHostile(Actor* other) const;
 
 		virtual void ApplyDamage(float amount);
+
+		const sf::Sprite& GetSprite() const { return mSprite; }
+		sf::Sprite& GetSprite() { return mSprite; }
 
 	private:
 		void UpdatePhysicsTransform();

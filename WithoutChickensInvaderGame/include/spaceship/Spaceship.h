@@ -22,7 +22,14 @@ namespace wci
 		virtual void OnTakenDamage(float amount, float health, float maxHealth);
 		virtual void Blow();
 
+		void Blink();
+		void UpdateBlink(float deltaTime);
+
 		sf::Vector2f mVelocity;
 		HealthComponent mHealth;
+
+		sf::Color mBlinkColorOffset;
+		float mBlinkDuration;
+		float mBlinkTime;
 	};
 }
