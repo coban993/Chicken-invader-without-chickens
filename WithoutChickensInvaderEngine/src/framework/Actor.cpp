@@ -123,7 +123,7 @@ namespace wci
 		return mSprite.getGlobalBounds();
 	}
 
-	bool Actor::IsActorOutOfBounds() const
+	bool Actor::IsActorOutOfBounds(float allowance) const
 	{
 		float windowWidth = GetWorld()->GetWindowSize().x;
 		float windowHeight = GetWorld()->GetWindowSize().y;
@@ -133,16 +133,16 @@ namespace wci
 
 		sf::Vector2f actorPosition = GetActorLocation();
 
-		if (actorPosition.x < -width)
+		if (actorPosition.x < -width - allowance)
 			return true;
 
-		if (actorPosition.x > windowWidth + width)
+		if (actorPosition.x > windowWidth + width + allowance)
 			return true;
 
-		if (actorPosition.y < -heaight)
+		if (actorPosition.y < -heaight - allowance)
 			return true;
 
-		if (actorPosition.y > windowHeight + heaight)
+		if (actorPosition.y > windowHeight + heaight + allowance)
 			return true;
 
 		return false;
@@ -175,6 +175,8 @@ namespace wci
 
 	bool Actor::IsOtherHostile(Actor* other) const
 	{
+		if (other == nullptr) return false;
+
 		if (GetTeamID() == GetNeturalTeamID() || other->GetTeamID() == GetNeturalTeamID()) return false;
 			
 		return GetTeamID() != other->GetTeamID();

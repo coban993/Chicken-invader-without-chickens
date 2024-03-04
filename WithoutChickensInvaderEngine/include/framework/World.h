@@ -1,12 +1,13 @@
 #pragma once
-#include "Core.h"
 #include <SFML\Graphics.hpp>
+#include "Core.h"
+#include "framework\Object.h"
 
 namespace wci
 {
 	class Actor;
 	class Application;
-	class World
+	class World : public Object
 	{
 	public:
 		World(Application* owningApp); 
@@ -27,8 +28,8 @@ namespace wci
 		Application* mOwningApp;
 		bool mBeginPlay;
 
-		void BeginPLay();
-		void Tick(float deltaTime);
+		virtual void BeginPLay();
+		virtual void Tick(float deltaTime);
 
 		List<shared<Actor>> mActors;
 		List<shared<Actor>> mPendingActors;

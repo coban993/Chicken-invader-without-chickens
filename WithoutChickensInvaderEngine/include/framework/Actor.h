@@ -38,7 +38,7 @@ namespace wci
 		const World* GetWorld() const { return mOwningWorld; }
 		World* GetWorld() { return mOwningWorld; }
 
-		bool IsActorOutOfBounds() const;
+		bool IsActorOutOfBounds(float allowance = 10.f) const;
 
 		void SetEnablePhysics(bool enable);
 		virtual void OnActorBeingOverlap(Actor* other);

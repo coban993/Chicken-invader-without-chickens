@@ -3,6 +3,7 @@
 #include "framework\World.h"
 #include "framework\AssetManager.h"
 #include "framework\Physics.h"
+#include "framework\TimerManager.h"
 
 namespace wci
 {
@@ -71,6 +72,7 @@ namespace wci
 		if (currentWorld)
 			currentWorld->TickInternal(deltaTime);
 
+		TimeManager::Get().UpdateTimer(deltaTime);
 		Physics::Get().Step(deltaTime);
 
 		if (mCleanCycleClock.getElapsedTime().asSeconds() >= mCleanCycleInterval)

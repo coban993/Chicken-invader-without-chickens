@@ -22,6 +22,15 @@ add_executable(${WITHOUT_CHICKENS_INVADER_GAME_TARGET_NAME}
 
 	${CMAKE_CURRENT_SOURCE_DIR}/include/VFX/Explosion.h
 	${CMAKE_CURRENT_SOURCE_DIR}/src/VFX/Explosion.cpp
+
+	${CMAKE_CURRENT_SOURCE_DIR}/include/enemy/EnemySpaceship.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/enemy/EnemySpaceship.cpp
+
+	${CMAKE_CURRENT_SOURCE_DIR}/include/enemy/Vanguard.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/enemy/Vanguard.cpp
+
+	${CMAKE_CURRENT_SOURCE_DIR}/include/level/GameLevelOne.h
+	${CMAKE_CURRENT_SOURCE_DIR}/src/level/GameLevelOne.cpp
 )
 
 target_include_directories(${WITHOUT_CHICKENS_INVADER_ENGINE_TARGET_NAME} PUBLIC
