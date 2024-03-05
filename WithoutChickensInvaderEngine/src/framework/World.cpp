@@ -2,6 +2,7 @@
 #include "framework\Core.h"
 #include "framework\Actor.h"
 #include "framework\Application.h"
+#include "gameplay\GameStage.h"
 
 namespace wci
 {
@@ -9,7 +10,9 @@ namespace wci
 		:mOwningApp{ owningApp },
 		mBeginPlay{false},
 		mActors{},
-		mPendingActors{}
+		mPendingActors{},
+		mCurrentStageIndex{-1},
+		mGameStages{}
 	{
 	}
 
@@ -32,11 +35,35 @@ namespace wci
 			++iter;
 		}
 
+		if (mCurrentStageIndex >= 0 && mCurrentStageIndex < mGameStages.size())
+			mGameStages[mCurrentStageIndex]->TickStage(deltaTime);
+
 		Tick(deltaTime);
 	}
 
 	void World::Tick(float deltaTime)
 	{
+	}
+
+	void World::InitGameStages()
+	{
+
+	}
+
+	void World::AllGameStagesFinished()
+	{
+	}
+
+	void World::NextGameStage()
+	{
+		++mCurrentStageIndex;
+		if (mCurrentStageIndex >= 0 && mCurrentStageIndex < mGameStages.size())
+		{
+			mGameStages[mCurrentStageIndex]->onStageFinished.BindAction(GetWeakRef(), &World::NextGameStage);
+			mGameStages[mCurrentStageIndex]->StartStage();
+		}
+		else
+			AllGameStagesFinished();
 	}
 
 	void World::BeginPlayingInternal()
@@ -45,6 +72,8 @@ namespace wci
 		{
 			mBeginPlay = true;
 			BeginPLay();
+			InitGameStages();
+			NextGameStage();
 		}
 	}
 
@@ -74,5 +103,18 @@ namespace wci
 			else
 				++iter;
 		}
+
+		for (auto iter = mGameStages.begin(); iter != mGameStages.end();)
+		{
+			if (iter->get()->IsStageFinished())
+				iter = mGameStages.erase(iter);
+			else
+				++iter;
+		}
+	}
+
+	void World::AddStage(const shared<GameStage>& newStage)
+	{
+		mGameStages.push_back(newStage);
 	}
 }

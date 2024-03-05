@@ -5,6 +5,8 @@
 #include "framework\AssetManager.h"
 #include "enemy\Vanguard.h"
 #include "framework\TimerManager.h"
+#include "gameplay\GameStage.h"
+#include "enemy\VanguardStage.h"
 
 namespace wci
 {
@@ -14,18 +16,18 @@ namespace wci
 		testPlayerSpaceship = SpawnActor<PlayerSpaceship>();
 		testPlayerSpaceship.lock()->SetActorLocation(sf::Vector2f(300.f, 400.f));
 
-		weak<Vanguard> testSpaceship = SpawnActor<Vanguard>();
-		testSpaceship.lock()->SetActorLocation(sf::Vector2f(100.f, 50.f));
+		//weak<Vanguard> testSpaceship = SpawnActor<Vanguard>();
+		//testSpaceship.lock()->SetActorLocation(sf::Vector2f(100.f, 50.f));
 	}
 
 	void GameLevelOne::BeginPLay()
 	{
-		timerHandle_test = TimeManager::Get().SetTimer(GetWeakRef(), &GameLevelOne::TimerCallback_Test, 2, true);
+		//timerHandle_test = TimeManager::Get().SetTimer(GetWeakRef(), &GameLevelOne::TimerCallback_Test, 2, true);
 	}
 
-	void GameLevelOne::TimerCallback_Test()
+	void GameLevelOne::InitGameStages()
 	{
-		LOG("callback called");
-		TimeManager::Get().ClearTimer(timerHandle_test);
+		AddStage(shared<VanguardStage>{new VanguardStage{ this }});
 	}
+
 }

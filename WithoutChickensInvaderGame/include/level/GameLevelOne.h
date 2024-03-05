@@ -11,8 +11,8 @@ namespace wci
 		GameLevelOne(Application* owningApp);
 
 	private:
-		void TimerCallback_Test();
 		virtual void BeginPLay() override;
+		virtual void InitGameStages();
 
 		weak<PlayerSpaceship> testPlayerSpaceship;
 		TimerHandle timerHandle_test;

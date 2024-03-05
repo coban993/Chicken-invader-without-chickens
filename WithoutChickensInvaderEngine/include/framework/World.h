@@ -7,6 +7,7 @@ namespace wci
 {
 	class Actor;
 	class Application;
+	class GameStage;
 	class World : public Object
 	{
 	public:
@@ -23,6 +24,7 @@ namespace wci
 		sf::Vector2u GetWindowSize() const;
 
 		void CleanCycle();
+		void AddStage(const shared<GameStage>& newStage);
 
 	private:
 		Application* mOwningApp;
@@ -33,6 +35,12 @@ namespace wci
 
 		List<shared<Actor>> mActors;
 		List<shared<Actor>> mPendingActors;
+		List<shared<GameStage>> mGameStages;
+
+		int mCurrentStageIndex;
+		virtual void InitGameStages();
+		virtual void AllGameStagesFinished();
+		void NextGameStage();
 	};
 
 	template<typename ActorType, typename... Args>
