@@ -12,7 +12,7 @@ namespace wci
 		mLeftSpawnLocation{0.0f, 0.0f},
 		mRightSpawnLocation{0.0f, 0.0f},
 		mSpawnLocation{0.0f, 0.0f},
-		mRowsToSpawn{4},
+		mRowsToSpawn{2},
 		mCurrentRowVanguardCount{0},
 		mVanguardsPerRow{5},
 		mRowsSpawnCount{0}

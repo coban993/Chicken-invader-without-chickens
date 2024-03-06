@@ -13,7 +13,7 @@ namespace wci
 	{
 		Spaceship::Tick(deltaTime);
 
-		if (IsActorOutOfBounds(GetActorGlobalBounds().width))
+		if (IsActorOutOfBounds(GetActorGlobalBounds().width * 2.f))
 			Destroy();
 	}
 

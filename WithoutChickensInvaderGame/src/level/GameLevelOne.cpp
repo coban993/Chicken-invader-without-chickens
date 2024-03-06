@@ -7,6 +7,9 @@
 #include "framework\TimerManager.h"
 #include "gameplay\GameStage.h"
 #include "enemy\VanguardStage.h"
+#include "enemy\TwinBladeStage.h"
+#include "gameplay\WaitStage.h"
+#include "enemy\HexagonStage.h"
 
 namespace wci
 {
@@ -27,7 +30,12 @@ namespace wci
 
 	void GameLevelOne::InitGameStages()
 	{
+		AddStage(shared<HexagonStage>{new HexagonStage{ this }});
+
+		AddStage(shared<WaitStage>{new WaitStage{ this, 5.f }});
 		AddStage(shared<VanguardStage>{new VanguardStage{ this }});
+		AddStage(shared<WaitStage>{new WaitStage{ this, 5.f }});
+		AddStage(shared<TwinBladeStage>{new TwinBladeStage{ this }});
 	}
 
 }
