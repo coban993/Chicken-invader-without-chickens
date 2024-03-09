@@ -10,6 +10,8 @@
 #include "enemy\TwinBladeStage.h"
 #include "gameplay\WaitStage.h"
 #include "enemy\HexagonStage.h"
+#include "enemy\UFOStage.h"
+#include "enemy\UFO.h"
 
 namespace wci
 {
@@ -25,17 +27,22 @@ namespace wci
 
 	void GameLevelOne::BeginPLay()
 	{
-		//timerHandle_test = TimeManager::Get().SetTimer(GetWeakRef(), &GameLevelOne::TimerCallback_Test, 2, true);
+		/*weak<UFO> newUFO = SpawnActor<UFO>(sf::Vector2f{0.f, 0.f});
+		newUFO.lock()->SetActorLocation({GetWindowSize().x / 2.f, GetWindowSize().y / 2.f});*/
 	}
 
 	void GameLevelOne::InitGameStages()
 	{
-		AddStage(shared<HexagonStage>{new HexagonStage{ this }});
+		AddStage(shared<UFOStage>{new UFOStage{ this }});
 
 		AddStage(shared<WaitStage>{new WaitStage{ this, 5.f }});
 		AddStage(shared<VanguardStage>{new VanguardStage{ this }});
+
 		AddStage(shared<WaitStage>{new WaitStage{ this, 5.f }});
 		AddStage(shared<TwinBladeStage>{new TwinBladeStage{ this }});
+
+		AddStage(shared<WaitStage>{new WaitStage{ this, 5.f }});
+		AddStage(shared<HexagonStage>{new HexagonStage{ this }});
 	}
 
 }

@@ -28,7 +28,7 @@ namespace wci
 		float vectorLength = GetVectorLength<T>(vector);
 		if (vectorLength == 0.f) return sf::Vector2<T>{};
 
-		ScaleVector(vector, vectorLength);
+		ScaleVector(vector, 1.0/vectorLength);
 
 		return vector;
 	}
