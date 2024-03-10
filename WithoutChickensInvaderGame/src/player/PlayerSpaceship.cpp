@@ -2,6 +2,8 @@
 #include <SFML\System.hpp>
 #include "framework\MathUtility.h"
 #include "weapon\BulletShooter.h"
+#include "weapon\ThreeWayShooter.h"
+#include "weapon\FrontalWiper.h"
 
 namespace wci
 {
@@ -9,7 +11,7 @@ namespace wci
 		:Spaceship{owningWorld, path},
 		mMoveInput{},
 		mSpeed{200.f},
-		mShooter{ new BulletShooter{this, 0.1f, {50.f, 0.f}} }
+		mShooter{ new BulletShooter{this, 0.1f} }
 	{
 		SetTeamID(1);
 	}
@@ -25,6 +27,11 @@ namespace wci
 	{
 		if (mShooter)
 			mShooter->Shoot();
+	}
+
+	void PlayerSpaceship::SetShooter(unique<Shooter>&& newShooter)
+	{
+		mShooter = std::move(newShooter);
 	}
 
 	void PlayerSpaceship::HandleInput()

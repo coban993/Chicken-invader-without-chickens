@@ -17,11 +17,14 @@ namespace wci
 		virtual void BeginPlay() override;
 		virtual void ApplyDamage(float amount) override;
 
+		HealthComponent& GetHealthComponent() { return mHealth; }
+
 	private:
 		virtual void OnHealthChanged(float amount, float health, float maxHealth);
 		virtual void OnTakenDamage(float amount, float health, float maxHealth);
-		virtual void Blow();
+		virtual void Blew();
 
+		void Blow();
 		void Blink();
 		void UpdateBlink(float deltaTime);
 

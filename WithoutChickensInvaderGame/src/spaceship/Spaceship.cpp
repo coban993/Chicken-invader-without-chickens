@@ -55,11 +55,15 @@ namespace wci
 		Blink();
 	}
 
+	void Spaceship::Blew()
+	{
+	}
+
 	void Spaceship::Blow()
 	{
 		Explosion* exp = new Explosion();
 		exp->SpawnExplosion(GetWorld(), GetActorLocation());
-
+		Blew();
 		Destroy();
 		delete exp;
 	}

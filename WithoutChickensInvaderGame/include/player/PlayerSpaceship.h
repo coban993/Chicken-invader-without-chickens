@@ -3,7 +3,7 @@
 
 namespace wci
 {
-	class BulletShooter;
+	class Shooter;
 	class PlayerSpaceship : public Spaceship
 	{
 	public:
@@ -15,6 +15,8 @@ namespace wci
 
 		virtual void Shoot() override;
 
+		void SetShooter(unique<Shooter>&& newShooter);
+
 	private:
 		void HandleInput();
 		void ConsumeInput(float deltaTime);
@@ -24,6 +26,6 @@ namespace wci
 		sf::Vector2f mMoveInput;
 		float mSpeed;
 
-		unique<BulletShooter> mShooter;
+		unique<Shooter> mShooter;
 	};
 }
