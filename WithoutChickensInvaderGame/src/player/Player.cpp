@@ -31,7 +31,7 @@ namespace wci
 	{
 		if (count > 0)
 		{
-			mLifeCount += conut;
+			mLifeCount += count;
 			onLifeChange.Broadcast(mLifeCount);
 		}
 	}
