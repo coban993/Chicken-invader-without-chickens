@@ -14,6 +14,7 @@ namespace wci
 			const std::string& bulletTexturePath = "SpaceShooterRedux/PNG/Lasers/laserBlue01.png");
 
 		virtual bool IsOnCooldown() const override;
+		virtual void IncrementLevel(int amt = 1) override;
 
 		void SetBulletTexturePath(const std::string& bulletTexturePath);
 

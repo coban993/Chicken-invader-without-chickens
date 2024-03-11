@@ -2,10 +2,18 @@
 
 namespace wci
 {
-	Shooter::Shooter(Actor* owner)
-		:mOwner{owner}
-	{
 
+	Shooter::Shooter(Actor* owner)
+		:mOwner{owner},
+		mCurrentLevel{1},
+		mMaxLevel{4}
+	{
+	}
+
+	void Shooter::IncrementLevel(int amt)
+	{
+		if (mCurrentLevel == mMaxLevel) return;
+		++mCurrentLevel;
 	}
 
 	void Shooter::Shoot()

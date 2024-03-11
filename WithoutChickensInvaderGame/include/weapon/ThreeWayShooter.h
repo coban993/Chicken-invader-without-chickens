@@ -13,6 +13,11 @@ namespace wci
 		BulletShooter mShooterRight;
 		BulletShooter mShooterMid;
 
+		BulletShooter mTopLevelShooterLeft;
+		BulletShooter mTopLevelShooterRight;
+
+		virtual void IncrementLevel(int amt = 1) override;
+
 	private:
 		virtual void ShootImpl();
 	};
