@@ -2,6 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include "Object.h"
 #include "Core.h"
+#include "Delegate.h"
 
 class b2Body;
 namespace wci
@@ -54,8 +55,10 @@ namespace wci
 
 		virtual void ApplyDamage(float amount);
 
-		const sf::Sprite& GetSprite() const { return mSprite; }
 		sf::Sprite& GetSprite() { return mSprite; }
+		const sf::Sprite& GetSprite() const { return mSprite; }
+
+		Delegate<Actor*> onActorDestoryed;
 
 	private:
 		void UpdatePhysicsTransform();

@@ -14,7 +14,10 @@ namespace wci
 		virtual void BeginPLay() override;
 		virtual void InitGameStages();
 
-		weak<PlayerSpaceship> testPlayerSpaceship;
+		void PlayerSpaceshipDestroyed(Actor* destroyedPlayerSpaceship);
+		void GameOver();
+
+		weak<PlayerSpaceship> mPlayerSpaceship;
 		TimerHandle timerHandle_test;
 	};
 }

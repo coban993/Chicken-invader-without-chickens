@@ -170,6 +170,7 @@ namespace wci
 	void Actor::Destroy()
 	{
 		UnInitializePhysics();
+		onActorDestoryed.Broadcast(this);
 		Object::Destroy();
 	}
 
