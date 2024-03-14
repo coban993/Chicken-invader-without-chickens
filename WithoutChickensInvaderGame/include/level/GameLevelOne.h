@@ -4,6 +4,7 @@
 
 namespace wci
 {
+	class GameplayHUD;
 	class PlayerSpaceship;
 	class GameLevelOne : public World
 	{
@@ -18,6 +19,7 @@ namespace wci
 		void GameOver();
 
 		weak<PlayerSpaceship> mPlayerSpaceship;
+		weak<GameplayHUD> mGameplayHUD;
 		TimerHandle timerHandle_test;
 	};
 }

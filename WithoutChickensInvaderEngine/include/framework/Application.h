@@ -16,8 +16,12 @@ namespace wci
 		weak<WorldType> LoadWorld();
 
 		sf::Vector2u GetWindowSize() const;
+		sf::RenderWindow& GetWindow() { return mWindow; }
+		const sf::RenderWindow& GetWindow() const { return mWindow; }
 
 	private:
+		bool Dispatch(const sf::Event& event);
+
 		void TickInternal(float deltaTime);
 		void RenderInternal();
 		
@@ -28,7 +32,7 @@ namespace wci
 		float mTargetFrameRate;
 		sf::Clock mTickClock;
 
-		shared<World> currentWorld;
+		shared<World> mCurrentWorld;
 		sf::Clock mCleanCycleClock;
 		float mCleanCycleInterval;
 	};
@@ -37,7 +41,7 @@ namespace wci
 	weak<WorldType> Application::LoadWorld()
 	{
 		shared<WorldType> newWorld{ new WorldType{this} };
-		currentWorld = newWorld;
+		mCurrentWorld = newWorld;
 		
 		return newWorld;
 	}

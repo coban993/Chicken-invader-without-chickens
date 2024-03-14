@@ -11,7 +11,7 @@ namespace wci
 		:mWindow{ sf::VideoMode(windowWidth,  windowHeight), title, style },
 		mTargetFrameRate(60.f),
 		mTickClock{},
-		currentWorld{ nullptr },
+		mCurrentWorld{ nullptr },
 		mCleanCycleClock{},
 		mCleanCycleInterval{ 2.f }
 	{
@@ -30,6 +30,8 @@ namespace wci
 			{
 				if (windowEvent.type == sf::Event::EventType::Closed)
 					mWindow.close();
+				else
+					Dispatch(windowEvent);
 			}
 
 			float frameDeltaTime = mTickClock.restart().asSeconds();
@@ -54,9 +56,9 @@ namespace wci
 
 	void Application::Render()
 	{
-		if (currentWorld)
+		if (mCurrentWorld)
 		{
-			currentWorld->Render(mWindow);
+			mCurrentWorld->Render(mWindow);
 		}
 	}
 
@@ -65,12 +67,20 @@ namespace wci
 		return mWindow.getSize();
 	}
 
+	bool Application::Dispatch(const sf::Event& event)
+	{
+		if (mCurrentWorld)
+			return mCurrentWorld->DispatchEvent(event);
+
+		return false;
+	}
+
 	void Application::TickInternal(float deltaTime)
 	{
 		Tick(deltaTime);
 
-		if (currentWorld)
-			currentWorld->TickInternal(deltaTime);
+		if (mCurrentWorld)
+			mCurrentWorld->TickInternal(deltaTime);
 
 		TimeManager::Get().UpdateTimer(deltaTime);
 		Physics::Get().Step(deltaTime);
@@ -79,8 +89,8 @@ namespace wci
 		{
 			mCleanCycleClock.restart();
 			AssetManager::Get().CleanCycle();
-			if (currentWorld)
-				currentWorld->CleanCycle();
+			if (mCurrentWorld)
+				mCurrentWorld->CleanCycle();
 		}
 	}
 

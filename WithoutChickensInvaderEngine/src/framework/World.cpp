@@ -3,6 +3,7 @@
 #include "framework\Actor.h"
 #include "framework\Application.h"
 #include "gameplay\GameStage.h"
+#include "widgets\HUD.h"
 
 namespace wci
 {
@@ -39,10 +40,24 @@ namespace wci
 			mCurrentStage->get()->TickStage(deltaTime);
 
 		Tick(deltaTime);
+
+		if (mHUD)
+		{
+			if(!mHUD->HasInit())
+				mHUD->NativeInit(mOwningApp->GetWindow());
+
+			mHUD->Tick(deltaTime);
+		}
 	}
 
 	void World::Tick(float deltaTime)
 	{
+	}
+
+	void World::RenderHUD(sf::RenderWindow& window)
+	{
+		if (mHUD)
+			mHUD->Draw(window);
 	}
 
 	void World::InitGameStages()
@@ -91,6 +106,8 @@ namespace wci
 		{
 			actor->Render(window);
 		}
+
+		RenderHUD(window);
 	}
 
 	sf::Vector2u World::GetWindowSize() const
@@ -116,5 +133,13 @@ namespace wci
 	void World::AddStage(const shared<GameStage>& newStage)
 	{
 		mGameStages.push_back(newStage);
+	}
+
+	bool World::DispatchEvent(const sf::Event& event)
+	{
+		if (mHUD)
+			return mHUD->HandleEvent(event);
+
+		return false;
 	}
 }

@@ -13,6 +13,7 @@
 #include "enemy\UFOStage.h"
 #include "enemy\UFO.h"
 #include "player\PlayerManager.h"
+#include "widgets\GameplayHUD.h"
 
 namespace wci
 {
@@ -26,6 +27,7 @@ namespace wci
 		Player newPlayer = PlayerManager::Get().CreateNewPlayer();
 		mPlayerSpaceship = newPlayer.SpawnSpaceship(this);
 		mPlayerSpaceship.lock()->onActorDestoryed.BindAction(GetWeakRef(), &GameLevelOne::PlayerSpaceshipDestroyed);
+		mGameplayHUD = SpawnHUD<GameplayHUD>();
 	}
 
 	void GameLevelOne::InitGameStages()

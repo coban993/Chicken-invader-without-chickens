@@ -7,6 +7,7 @@ namespace wci
 {
 	class Actor;
 	class Application;
+	class HUD;
 	class GameStage;
 	class World : public Object
 	{
@@ -21,10 +22,15 @@ namespace wci
 		template<typename ActorType, typename... Args>
 		weak<ActorType> SpawnActor(Args... args);
 
+		template<typename HUDType, typename... Args>
+		weak<HUDType> SpawnHUD(Args... args);
+
 		sf::Vector2u GetWindowSize() const;
 
 		void CleanCycle();
 		void AddStage(const shared<GameStage>& newStage);
+
+		bool DispatchEvent(const sf::Event& event);
 
 	private:
 		Application* mOwningApp;
@@ -33,10 +39,14 @@ namespace wci
 		virtual void BeginPLay();
 		virtual void Tick(float deltaTime);
 
+		void RenderHUD(sf::RenderWindow& window);
+
 		List<shared<Actor>> mActors;
 		List<shared<Actor>> mPendingActors;
 		List<shared<GameStage>> mGameStages;
 		List<shared<GameStage>>::iterator mCurrentStage;
+
+		shared<HUD> mHUD;
 
 		virtual void InitGameStages();
 		virtual void AllGameStagesFinished();
@@ -51,5 +61,13 @@ namespace wci
 		shared<ActorType> newActor{ new ActorType{this, args...} };
 		mPendingActors.push_back(newActor);
 		return newActor;
+	}
+
+	template<typename HUDType, typename ...Args>
+	inline weak<HUDType> World::SpawnHUD(Args ...args)
+	{
+		shared<HUDType> newHUD{ new HUDType(args...)};
+		mHUD = newHUD;
+		return newHUD;
 	}
 }
