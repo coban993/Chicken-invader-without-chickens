@@ -20,14 +20,14 @@ namespace wci
 		if (mHealth > mMaxHealth)
 			mHealth = mMaxHealth;
 
+		onHealthChange.Broadcast(amount, mHealth, mMaxHealth);
+
 		if (amount < 0)
 		{
 			TakenDamage(-amount);
 			if (mHealth <= 0)
 				HealthEmpty();
 		}
-
-		onHealthChange.Broadcast(amount, mHealth, mMaxHealth);
 	}
 
 	void HealthComponent::TakenDamage(float amount)

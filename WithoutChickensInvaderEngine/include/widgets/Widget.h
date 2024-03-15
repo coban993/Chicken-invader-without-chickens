@@ -19,6 +19,9 @@ namespace wci
 		bool GetVisibility() const { return mIsVisible; }
 		void SetVisibility(bool newVisibility);
 
+		virtual sf::FloatRect GetBound() const;
+		sf::Vector2f GetCenterPosition() const;
+
 	protected:
 		Widget();
 

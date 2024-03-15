@@ -18,7 +18,6 @@ namespace wci
 	private:
 		void TakenDamage(float amount);
 		void HealthEmpty();
-		void HealthRegen(float amount);
 
 		float mHealth;
 		float mMaxHealth;
