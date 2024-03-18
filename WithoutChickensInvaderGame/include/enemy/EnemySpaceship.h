@@ -19,6 +19,7 @@ namespace wci
 		);
 
 		virtual void Tick(float deltaTime) override;
+		void SetScoreAwardAmount(unsigned int amt);
 
 	private:
 		void SpawnReward();
@@ -27,6 +28,7 @@ namespace wci
 		virtual void Blew();
 
 		float mCollisionDamage;
+		unsigned int mScoreAwardAmount;
 		List<RewardFactoryFunc> mRewardsFactories;
 	};
 }

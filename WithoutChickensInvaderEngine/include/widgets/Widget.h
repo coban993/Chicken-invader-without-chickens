@@ -19,7 +19,7 @@ namespace wci
 		bool GetVisibility() const { return mIsVisible; }
 		void SetVisibility(bool newVisibility);
 
-		virtual sf::FloatRect GetBound() const;
+		virtual sf::FloatRect GetBound() const = 0;
 		sf::Vector2f GetCenterPosition() const;
 
 	protected:

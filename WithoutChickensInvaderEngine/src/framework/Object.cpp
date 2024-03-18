@@ -3,8 +3,10 @@
 
 namespace wci
 {
+	unsigned int Object::uniqueIDCounter = 0;
 	Object::Object()
-		:mIsPendingDestroyed{false}
+		:mIsPendingDestroyed{false},
+		mUniqueID{GetNextAvaliableID()}
 	{
 	}
 
@@ -15,6 +17,7 @@ namespace wci
 
 	void Object::Destroy()
 	{
+		onDestroy.Broadcast(this);
 		mIsPendingDestroyed = true;
 	}
 
@@ -26,6 +29,11 @@ namespace wci
 	weak<const Object> Object::GetWeakRef() const
 	{
 		return weak_from_this();
+	}
+
+	unsigned int Object::GetNextAvaliableID()
+	{
+		return uniqueIDCounter++;
 	}
 }
 

@@ -18,6 +18,11 @@ namespace wci
 		}
 	}
 
+	sf::FloatRect ImageWidget::GetBound() const
+	{
+		return mSprite.getGlobalBounds();
+	}
+
 	void ImageWidget::LocationUpdated(const sf::Vector2f& newLocation)
 	{
 		mSprite.setPosition(newLocation);

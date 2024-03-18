@@ -1,11 +1,13 @@
 #include "enemy\EnemySpaceship.h"
 #include "framework\MathUtility.h"
+#include "player\PlayerManager.h"
 
 namespace wci
 {
 	EnemySpaceship::EnemySpaceship(World* owningWorld, const std::string& texturePath, float collisionDamage, const List<RewardFactoryFunc> rewards)
 		:Spaceship{ owningWorld, texturePath },
 		mCollisionDamage{ collisionDamage },
+		mScoreAwardAmount{10},
 		mRewardsFactories{rewards}
 	{
 		SetTeamID(2);
@@ -17,6 +19,11 @@ namespace wci
 
 		if (IsActorOutOfBounds(GetActorGlobalBounds().width * 2.f))
 			Destroy();
+	}
+
+	void EnemySpaceship::SetScoreAwardAmount(unsigned int amt)
+	{
+		mScoreAwardAmount = amt;
 	}
 
 	void EnemySpaceship::SpawnReward()
@@ -43,5 +50,10 @@ namespace wci
 	void EnemySpaceship::Blew()
 	{
 		SpawnReward();
+
+		Player* player = PlayerManager::Get().GetPlayer();
+
+		if (player)
+			player->AddScore(mScoreAwardAmount);
 	}
 }

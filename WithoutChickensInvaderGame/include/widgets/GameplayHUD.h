@@ -19,11 +19,17 @@ namespace wci
 		virtual void Init(const sf::RenderWindow& windowRef) override;
 		void PlayerHealthUpdated(float amt, float currentHealth, float maxHealt);
 		void RefreshHealthBar();
+		void ConnectPlayerStatus();
+		void PlayerLifeCountUpdated(int amt);
+		void PlayerScoreUpdated(int newScore);
 		void PlayerSapceshipDestroyed(Actor* actor);
 
 		TextWidget mFramerateText;
 		ValueGauge mPlayerHealthBar;
 		ImageWidget mPlayerLifeIcon;
+		TextWidget mPlayerLifeCountText;
+		ImageWidget mPlayerScoreIcon;
+		TextWidget mPlayerScoreText;
 
 		sf::Color mHealthyHealthBarColor;
 		sf::Color mCriticalHealthBarColor;
