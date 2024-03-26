@@ -29,7 +29,7 @@ namespace wci
 			while (mWindow.pollEvent(windowEvent))
 			{
 				if (windowEvent.type == sf::Event::EventType::Closed)
-					mWindow.close();
+					QuitApplication();
 				else
 					Dispatch(windowEvent);
 			}
@@ -67,6 +67,11 @@ namespace wci
 		return mWindow.getSize();
 	}
 
+	void Application::QuitApplication()
+	{
+		mWindow.close();
+	}
+
 	bool Application::Dispatch(const sf::Event& event)
 	{
 		if (mCurrentWorld)
@@ -91,6 +96,12 @@ namespace wci
 			AssetManager::Get().CleanCycle();
 			if (mCurrentWorld)
 				mCurrentWorld->CleanCycle();
+		}
+
+		if (mPendingWorld && mPendingWorld != mCurrentWorld)
+		{
+			mCurrentWorld = mPendingWorld;
+			mCurrentWorld->BeginPlayingInternal();
 		}
 	}
 

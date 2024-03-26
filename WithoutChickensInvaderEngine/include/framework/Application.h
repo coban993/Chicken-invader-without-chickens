@@ -19,6 +19,8 @@ namespace wci
 		sf::RenderWindow& GetWindow() { return mWindow; }
 		const sf::RenderWindow& GetWindow() const { return mWindow; }
 
+		void QuitApplication();
+
 	private:
 		bool Dispatch(const sf::Event& event);
 
@@ -33,6 +35,8 @@ namespace wci
 		sf::Clock mTickClock;
 
 		shared<World> mCurrentWorld;
+		shared<World> mPendingWorld;
+
 		sf::Clock mCleanCycleClock;
 		float mCleanCycleInterval;
 	};
@@ -41,7 +45,7 @@ namespace wci
 	weak<WorldType> Application::LoadWorld()
 	{
 		shared<WorldType> newWorld{ new WorldType{this} };
-		mCurrentWorld = newWorld;
+		mPendingWorld = newWorld;
 		
 		return newWorld;
 	}

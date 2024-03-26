@@ -2,6 +2,7 @@
 #include "level\GameLevelOne.h"
 #include "config.h"
 #include "framework\AssetManager.h"
+#include "level\MainMenuLevel.h"
 
 wci::Application* GetApplication()
 {
@@ -15,7 +16,6 @@ namespace wci
 	{
 		AssetManager::Get().SetAssetRootDirectory(GetResourceDir());
 
-		weak<GameLevelOne> newWorld = LoadWorld<GameLevelOne>();
-		newWorld.lock()->BeginPlayingInternal();
+		weak<MainMenuLevel> newWorld = LoadWorld<MainMenuLevel>();
 	}
 }

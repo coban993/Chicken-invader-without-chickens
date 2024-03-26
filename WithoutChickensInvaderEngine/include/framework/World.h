@@ -32,6 +32,9 @@ namespace wci
 
 		bool DispatchEvent(const sf::Event& event);
 
+		Application* GetApplication() { return mOwningApp; }
+		const Application* GetApplication() const { return mOwningApp; }
+
 	private:
 		Application* mOwningApp;
 		bool mBeginPlay;

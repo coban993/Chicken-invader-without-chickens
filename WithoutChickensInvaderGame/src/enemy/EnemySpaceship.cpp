@@ -4,9 +4,10 @@
 
 namespace wci
 {
-	EnemySpaceship::EnemySpaceship(World* owningWorld, const std::string& texturePath, float collisionDamage, const List<RewardFactoryFunc> rewards)
+	EnemySpaceship::EnemySpaceship(World* owningWorld, const std::string& texturePath, float collisionDamage, float rewardSpawnRate, const List<RewardFactoryFunc> rewards)
 		:Spaceship{ owningWorld, texturePath },
 		mCollisionDamage{ collisionDamage },
+		mRewardSpawnRate{rewardSpawnRate},
 		mScoreAwardAmount{10},
 		mRewardsFactories{rewards}
 	{
@@ -29,6 +30,8 @@ namespace wci
 	void EnemySpaceship::SpawnReward()
 	{
 		if (mRewardsFactories.size() == 0) return;
+
+		if (mRewardSpawnRate < RandomRange(0, 1)) return;
 
 		int pick = (int)RandomRange(0, mRewardsFactories.size());
 

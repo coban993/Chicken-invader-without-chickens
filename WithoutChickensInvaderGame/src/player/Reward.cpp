@@ -58,6 +58,11 @@ namespace wci
 		return CreateReward(world, "SpaceShooterRedux/PNG/Power-ups/powerupGreen_bolt.png", RewardFrontalWiper);
 	}
 
+	weak<Reward> CreateLifeReward(World* world)
+	{
+		return CreateReward(world, "SpaceShooterRedux/PNG/UI/playerLife2_green.png", RewardLife);
+	}
+
 	weak<Reward> CreateReward(World* world, const std::string& texturePath, RewardFunc rewardFunc)
 	{
 		weak<Reward> reward = world->SpawnActor<Reward>(texturePath, rewardFunc);
@@ -83,5 +88,12 @@ namespace wci
 	{
 		if (player && !player->IsPendingDestroyed())
 			player->SetShooter(unique<Shooter>{new FrontalWiper{ player, 0.4f, {50.f, 0.f} }});
+	}
+
+	void RewardLife(PlayerSpaceship* player)
+	{
+		if (!PlayerManager::Get().GetPlayer()) return;
+
+		PlayerManager::Get().GetPlayer()->AddLifeCount(1);
 	}
 }
