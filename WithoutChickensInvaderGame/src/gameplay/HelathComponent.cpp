@@ -30,6 +30,12 @@ namespace wci
 		}
 	}
 
+	void HealthComponent::SetInitialHealth(float healt, float maxHealth)
+	{
+		mHealth = healt;
+		mMaxHealth = maxHealth;
+	}
+
 	void HealthComponent::TakenDamage(float amount)
 	{
 		onTakenDamage.Broadcast(amount, mHealth, mMaxHealth);

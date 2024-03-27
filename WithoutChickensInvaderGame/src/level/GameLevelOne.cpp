@@ -14,6 +14,8 @@
 #include "enemy\UFO.h"
 #include "player\PlayerManager.h"
 #include "widgets\GameplayHUD.h"
+#include "enemy\ChaosStage.h"
+#include "enemy\BossStage.h"
 
 namespace wci
 {
@@ -32,6 +34,8 @@ namespace wci
 
 	void GameLevelOne::InitGameStages()
 	{
+		AddStage(shared<BossStage>{new BossStage{ this }});
+
 		AddStage(shared<WaitStage>{new WaitStage{ this, 5.f }});
 		AddStage(shared<VanguardStage>{new VanguardStage{ this }});
 
@@ -43,6 +47,9 @@ namespace wci
 
 		AddStage(shared<WaitStage>{new WaitStage{ this, 10.f }});
 		AddStage(shared<UFOStage>{new UFOStage{ this }});
+
+		AddStage(shared<WaitStage>{new WaitStage{ this, 5.f }});
+		AddStage(shared<ChaosStage>{new ChaosStage{ this }});
 	}
 
 	void GameLevelOne::PlayerSpaceshipDestroyed(Actor* destroyedPlayerSpaceship)

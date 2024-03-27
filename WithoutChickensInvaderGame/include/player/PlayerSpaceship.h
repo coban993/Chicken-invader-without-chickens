@@ -1,5 +1,6 @@
 #pragma once
 #include "spaceship\Spaceship.h"
+#include "framework\TimerManager.h"
 
 namespace wci
 {
@@ -14,7 +15,8 @@ namespace wci
 		float GetSpeed() const { return mSpeed; }
 
 		virtual void Shoot() override;
-
+		virtual void ApplyDamage(float amt) override;
+		virtual void BeginPlay() override;
 		void SetShooter(unique<Shooter>&& newShooter);
 
 	private:
@@ -22,10 +24,19 @@ namespace wci
 		void ConsumeInput(float deltaTime);
 		void NormalizeInput();
 		void ClampInputOnEdge();
+		void StopInvulnerable();
+		void UpdateInvulnerable(float deltaTime);
 
 		sf::Vector2f mMoveInput;
 		float mSpeed;
 
 		unique<Shooter> mShooter;
+
+		float mInvulnerableTime;
+		TimerHandle mInvulnerableTimerHandle;
+		bool mInvulnerable;
+		float mInvulnerableFlashInterval;
+		float mInvulnerableFlashTimer;
+		float mInvulnerableFlashDir;
 	};
 }

@@ -8,10 +8,15 @@
 namespace wci
 {
 	PlayerSpaceship::PlayerSpaceship(World* owningWorld, const std::string& path)
-		:Spaceship{owningWorld, path},
+		:Spaceship{ owningWorld, path },
 		mMoveInput{},
-		mSpeed{200.f},
-		mShooter{ new BulletShooter{this, 0.1f, {50.f, 0.f}}}
+		mSpeed{ 200.f },
+		mShooter{ new BulletShooter{this, 0.1f, {50.f, 0.f}} },
+		mInvulnerableTime{ 2.f },
+		mInvulnerable{ true },
+		mInvulnerableFlashInterval{ 0.5f },
+		mInvulnerableFlashTimer{ 0.f },
+		mInvulnerableFlashDir{ 1 }
 	{
 		SetTeamID(1);
 	}
@@ -21,12 +26,25 @@ namespace wci
 		Spaceship::Tick(delatTime);
 		HandleInput();
 		ConsumeInput(delatTime);
+		UpdateInvulnerable(delatTime);
 	}
 
 	void PlayerSpaceship::Shoot()
 	{
 		if (mShooter)
 			mShooter->Shoot();
+	}
+
+	void PlayerSpaceship::ApplyDamage(float amt)
+	{
+		if (!mInvulnerable)
+			Spaceship::ApplyDamage(amt);
+	}
+
+	void PlayerSpaceship::BeginPlay()
+	{
+		Spaceship::BeginPlay();
+		TimeManager::Get().SetTimer(GetWeakRef(), &PlayerSpaceship::StopInvulnerable, mInvulnerableTime);
 	}
 
 	void PlayerSpaceship::SetShooter(unique<Shooter>&& newShooter)
@@ -84,5 +102,23 @@ namespace wci
 
 		if (actorLocation.y > GetWindowSize().y - 55 && mMoveInput.y == 1.f)
 			mMoveInput.y = 0.f;
+	}
+
+	void PlayerSpaceship::StopInvulnerable()
+	{
+		GetSprite().setColor({255,255,255,255});
+		mInvulnerable = false;
+	}
+
+	void PlayerSpaceship::UpdateInvulnerable(float deltaTime)
+	{
+		if (!mInvulnerable) return;
+
+		mInvulnerableFlashTimer += deltaTime * mInvulnerableFlashDir;
+
+		if (mInvulnerableFlashTimer < 0 || mInvulnerableFlashTimer > mInvulnerableFlashInterval)
+			mInvulnerableFlashDir *= -1;
+
+		GetSprite().setColor(LerpColor({255,255,255,64}, {255,255,255,128}, mInvulnerableFlashTimer/mInvulnerableFlashInterval));
 	}
 }

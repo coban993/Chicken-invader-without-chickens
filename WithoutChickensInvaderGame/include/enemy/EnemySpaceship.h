@@ -22,6 +22,7 @@ namespace wci
 
 		virtual void Tick(float deltaTime) override;
 		void SetScoreAwardAmount(unsigned int amt);
+		void SetRewardSpawnRate(float rate);
 
 	private:
 		void SpawnReward();

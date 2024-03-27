@@ -10,6 +10,7 @@ namespace wci
 		void ChangeHealth(float amount);
 		float GetHealth() const { return mHealth; }
 		float GetMaxHealth() const { return mMaxHealth; }
+		void SetInitialHealth(float healt, float maxHealth);
 
 		Delegate<float, float, float> onHealthChange;
 		Delegate<float, float, float> onTakenDamage;

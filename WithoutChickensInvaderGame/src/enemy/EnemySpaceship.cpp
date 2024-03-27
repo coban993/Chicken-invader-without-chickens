@@ -27,6 +27,13 @@ namespace wci
 		mScoreAwardAmount = amt;
 	}
 
+	void EnemySpaceship::SetRewardSpawnRate(float rate)
+	{
+		if (rate < 0 || rate > 1) return;
+
+		mRewardSpawnRate = rate;
+	}
+
 	void EnemySpaceship::SpawnReward()
 	{
 		if (mRewardsFactories.size() == 0) return;
