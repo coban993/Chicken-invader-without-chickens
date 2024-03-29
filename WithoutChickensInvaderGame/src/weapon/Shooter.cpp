@@ -16,6 +16,11 @@ namespace wci
 		++mCurrentLevel;
 	}
 
+	void Shooter::SetCurrentLevel(int level)
+	{
+		mCurrentLevel = level;
+	}
+
 	void Shooter::Shoot()
 	{
 		if (CanShoot() && !IsOnCooldown())
