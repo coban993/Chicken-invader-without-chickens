@@ -14,6 +14,8 @@ namespace wci
 
 		static PlayerManager& Get();
 
+		void Reset();
+
 	protected:
 		PlayerManager();
 

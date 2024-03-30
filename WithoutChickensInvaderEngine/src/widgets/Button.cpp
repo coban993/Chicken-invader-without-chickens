@@ -36,6 +36,8 @@ namespace wci
 
 	bool Button::HandleEvent(const sf::Event& windowEvent)
 	{
+		if (!GetVisibility()) return false;
+
 		bool handled = false;
 
 		if (windowEvent.type == sf::Event::MouseButtonReleased)
@@ -58,7 +60,7 @@ namespace wci
 				handled = true;
 			}
 		}
-		else if (windowEvent.type == sf::Event::JoystickMoved)
+		else if (windowEvent.type == sf::Event::MouseMoved)
 		{
 			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
@@ -70,8 +72,6 @@ namespace wci
 				{
 					ButtonUp();
 				}
-
-				handled = true;
 			}
 		}
 		return handled || Widget::HandleEvent(windowEvent);

@@ -14,9 +14,12 @@ namespace wci
 	private:
 		virtual void BeginPLay() override;
 		virtual void InitGameStages();
+		virtual void AllGameStagesFinished() override;
 
 		void PlayerSpaceshipDestroyed(Actor* destroyedPlayerSpaceship);
 		void GameOver();
+		void QuitGame();
+		void Restart();
 
 		weak<PlayerSpaceship> mPlayerSpaceship;
 		weak<GameplayHUD> mGameplayHUD;

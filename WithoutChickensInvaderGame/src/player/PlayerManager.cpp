@@ -38,4 +38,9 @@ namespace wci
 
 		return *playerManager;
 	}
+
+	void PlayerManager::Reset()
+	{
+		mPlayers.clear();
+	}
 }

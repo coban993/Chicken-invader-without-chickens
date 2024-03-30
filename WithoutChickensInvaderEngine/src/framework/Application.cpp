@@ -101,6 +101,7 @@ namespace wci
 		if (mPendingWorld && mPendingWorld != mCurrentWorld)
 		{
 			mCurrentWorld = mPendingWorld;
+			Physics::Get().Cleanup();
 			mCurrentWorld->BeginPlayingInternal();
 		}
 	}
