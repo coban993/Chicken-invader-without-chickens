@@ -17,6 +17,7 @@
 #include "enemy\ChaosStage.h"
 #include "enemy\BossStage.h"
 #include "framework\Application.h"
+#include "framework\BackdropActor.h"
 
 namespace wci
 {
@@ -27,6 +28,8 @@ namespace wci
 
 	void GameLevelOne::BeginPLay()
 	{
+		SpawnCosmetics();
+
 		Player& newPlayer = PlayerManager::Get().CreateNewPlayer();
 		mPlayerSpaceship = newPlayer.SpawnSpaceship(this);
 		mPlayerSpaceship.lock()->onActorDestoryed.BindAction(GetWeakRef(), &GameLevelOne::PlayerSpaceshipDestroyed);
@@ -85,5 +88,10 @@ namespace wci
 	{
 		PlayerManager::Get().Reset();
 		GetApplication()->LoadWorld<GameLevelOne>();
+	}
+
+	void GameLevelOne::SpawnCosmetics()
+	{
+		auto backdropActor = SpawnActor<BackdropActor>("SpaceShooterRedux/Backgrounds/darkPurple.png");
 	}
 }

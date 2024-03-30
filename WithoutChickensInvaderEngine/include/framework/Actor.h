@@ -60,6 +60,8 @@ namespace wci
 
 		Delegate<Actor*> onActorDestoryed;
 
+		void SetTextureRepeated(bool repeated);
+
 	private:
 		void UpdatePhysicsTransform();
 		void InitializePhysics();

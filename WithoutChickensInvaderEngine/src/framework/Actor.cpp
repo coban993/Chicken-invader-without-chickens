@@ -188,6 +188,11 @@ namespace wci
 
 	}
 
+	void Actor::SetTextureRepeated(bool repeated)
+	{
+		mTexture->setRepeated(repeated);
+	}
+
 	void Actor::UpdatePhysicsTransform()
 	{
 		if (mPhysicBody)

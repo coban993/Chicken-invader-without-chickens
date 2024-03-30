@@ -20,6 +20,7 @@ namespace wci
 		void GameOver();
 		void QuitGame();
 		void Restart();
+		void SpawnCosmetics();
 
 		weak<PlayerSpaceship> mPlayerSpaceship;
 		weak<GameplayHUD> mGameplayHUD;
