@@ -18,6 +18,7 @@
 #include "enemy\BossStage.h"
 #include "framework\Application.h"
 #include "framework\BackdropActor.h"
+#include "framework\BackgroundLayer.h"
 
 namespace wci
 {
@@ -93,5 +94,50 @@ namespace wci
 	void GameLevelOne::SpawnCosmetics()
 	{
 		auto backdropActor = SpawnActor<BackdropActor>("SpaceShooterRedux/Backgrounds/darkPurple.png");
+		weak<BackgroundLayer> planets = SpawnActor<BackgroundLayer>();
+		planets.lock()->SetAssets(
+			{
+				"SpaceShooterRedux/PNG/planets/Planet1.png",
+				"SpaceShooterRedux/PNG/planets/Planet2.png",
+				"SpaceShooterRedux/PNG/planets/Planet3.png",
+				"SpaceShooterRedux/PNG/planets/Planet4.png",
+				"SpaceShooterRedux/PNG/planets/Planet5.png",
+				"SpaceShooterRedux/PNG/planets/Planet6.png",
+				"SpaceShooterRedux/PNG/planets/Planet7.png"
+			}
+		);
+
+		planets.lock()->SetSpriteCount(1);
+		planets.lock()->SetSizes(0.8f, 1.2f);
+		planets.lock()->SetVelocities({0, 30.f}, {0, 80.f});
+
+		weak<BackgroundLayer> meteors = SpawnActor<BackgroundLayer>();
+		meteors.lock()->SetAssets(
+			{
+				"SpaceShooterRedux/PNG/Meteors/meteorGrey_tiny1.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorGrey_tiny2.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorBrown_big1.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorBrown_big2.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorBrown_big3.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorBrown_big4.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorBrown_med1.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorBrown_med3.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorBrown_small1.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorBrown_small2.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorBrown_tiny1.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorBrown_tiny2.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorGrey_big1.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorGrey_big2.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorGrey_big3.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorGrey_big4.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorGrey_med1.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorGrey_med2.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorGrey_small1.png",
+				"SpaceShooterRedux/PNG/Meteors/meteorGrey_small2.png",
+			}
+		);
+
+		meteors.lock()->SetSpriteCount(20);
+		meteors.lock()->SetSizes(0.2f, 0.5f);
 	}
 }

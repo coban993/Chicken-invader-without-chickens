@@ -16,7 +16,25 @@ namespace wci
 			const sf::Color& colorTint = sf::Color{180,180,200,225}
 		);
 
+		void SetAssets(const List<std::string> assetPaths);
+		void SetColorTint(const sf::Color& color);
+		void SetSpriteCount(int newCount);
+		void SetVelocities(const sf::Vector2f& min, const sf::Vector2f& max);
+		void SetSizes(float min, float max);
+
+		virtual void Render(sf::RenderWindow& windowRef) override;
+		virtual void Tick(float deltaTime) override;
+
 	private:
+		void RefreshSprites();
+		void RandomSpriteTexture(sf::Sprite& sprite);
+		void RandomSpriteTransform(sf::Sprite& sprite, bool randomY = false);
+		void RandomSpritePosition(sf::Sprite& sprite, bool randomY);
+		void RandomSpriteRotation(sf::Sprite& sprite);
+		void RandomSpriteSize(sf::Sprite& sprite);
+		bool IsSpriteOffScreen(sf::Sprite& sprite) const;
+		shared<sf::Texture> GetRandomTexture() const;
+
 		sf::Vector2f mMinVelocity;
 		sf::Vector2f mMaxVelocity;
 		float mSizeMin;

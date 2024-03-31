@@ -3,7 +3,9 @@
 
 namespace wci
 {
-	BackdropActor::BackdropActor(World* owningWorld, const std::string& texturePath, const sf::Vector2f& velocity)
+	BackdropActor::BackdropActor(World* owningWorld,
+		const std::string& texturePath,
+		const sf::Vector2f& velocity)
 		:Actor{owningWorld, texturePath},
 		mMovingVelocity{velocity},
 		mLeftShift{0},

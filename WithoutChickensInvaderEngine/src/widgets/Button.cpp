@@ -3,7 +3,8 @@
 
 namespace wci
 {
-	Button::Button(const std::string& textString, const std::string& buttonTexturePath)
+	Button::Button(const std::string& textString,
+		const std::string& buttonTexturePath)
 		:mButtonTexture{AssetManager::Get().LoadTexture(buttonTexturePath)},
 		mButtonSprite{*(mButtonTexture.get())},
 		mButtonFont{ AssetManager::Get().LoadFont("SpaceShooterRedux/Bonus/kenvector_future.ttf")},
